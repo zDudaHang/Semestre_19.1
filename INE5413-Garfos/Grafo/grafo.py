@@ -1,5 +1,5 @@
-import os
-from queue import Queue
+from algoritmo_bfs import Algoritmo_bfs
+import random
 
 class GrafoND:
 	def __init__(self):
@@ -20,6 +20,17 @@ class GrafoND:
 		for vertice in self.vertices:
 			sum += len(self.vertices[vertice][1::])
 		return int(sum/2)
+
+	def pegar_vertices(self):
+		return list(self.vertices.keys())
+
+	def pegar_arestas(self):
+		arestas = []
+		for v in self.vertices:
+			for u in self.vizinhos(v):
+				par = (v,u[0])
+				arestas.append(par)
+		return arestas
 
 	def grau(self, vertice):
 		return len(self.vertices[vertice][1::])
@@ -51,42 +62,6 @@ class GrafoND:
 		else:
 			return float('inf')
 
-	def pegar_vertices(self, texto, num_vertices):
-		vertices = texto[1:num_vertices+1]
-		for v in vertices:
-			valores = v.split(' ',1)
-			v_id = int(valores[0])
-			v_rotulo = valores[1]
-			self.inserir_vertice(v_id, v_rotulo)
-
-	def pegar_arestas(self, texto, num_vertices):
-		arestas = texto[num_vertices+2::]
-		for a in arestas:
-			valores = a.split()
-			u = int(valores[0])
-			v = int(valores[1])
-			peso = float(valores[2])
-			self.inserir_aresta(u, v, peso)
-
-	def ler(self, nome_arquivo):
-		texto = None
-		# ==================================================================== ABRINDO ARQUIVO
-		try:
-			arquivo = open(nome_arquivo)
-			texto = arquivo.read().split('\n')
-			arquivo.close()
-		except  OSError:
-			print('Não foi possível abrir o arquivo %s' % nome_arquivo)
-			arquivo.close()
-		# ==================================================================== ABRINDO ARQUIVO
-		#print(texto)
-		info_num_vertices = texto[0].split()
-		num_vertices = int(info_num_vertices[1])
-
-		self.pegar_vertices(texto, num_vertices)
-
-		self.pegar_arestas(texto, num_vertices)
-
 	def mostrar_grafo(self):
 		vertices = list(self.vertices.keys())
 		print('G: {')
@@ -94,53 +69,35 @@ class GrafoND:
 			print('	%s (%s): %s' % (v, self.vertices[v][0], self.vertices[v][1::]))
 		print('}')
 
-	def buscar_largura(self, vertice_s):
-		Cv = {}
-		Dv = {}
-		Av = {}
-		vertices = list(self.vertices.keys())
-		for v in vertices:
-			Cv[v] = False
-			Dv[v] = float('inf')
-			Av[v] = None
+	def eh_conectado(self):
+		v = random.choice(self.pegar_vertices())
+		flag_visitado = True
 
-		Cv[vertice_s] = True
-		Dv[vertice_s] = 0
+		bfs = Algoritmo_bfs()
+		Dv = bfs.buscar_em_largura(v, self)
 
-		queue = Queue()
-		queue.enqueue(vertice_s)
-		while (not queue.empty()):
-			u = queue.dequeue()
-			for tupla in self.vizinhos(u):
-				w = tupla[0]
-				if (Cv[w] == False):
-					Cv[w] = True
-					Dv[w] = Dv[u] + 1
-					Av[w] = u
-					queue.enqueue(w)
-		self.mostrar_Dv(self.filtrar_Dv(Dv))
+		for dv in Dv:
+			if (Dv[dv] == float('inf')):
+				flag_visitado = False
+		return flag_visitado
 
-	def filtrar_Dv(self, Dv):
-		_Dv = {}
-		elementos = list(Dv.keys())
-		valores = list(Dv.values())
-		for valor in valores:
-			_Dv[valor] = []
-		for elemento in elementos:
-			dv = Dv[elemento]
-			_Dv[dv].append(elemento)
-		return _Dv
+	def tem_grau_par(self):
+		for v in self.pegar_vertices():
+			if(self.grau(v) % 2 != 0):
+				return False
+		return True
 
-	def mostrar_Dv(self, _Dv):
-		for dv in _Dv:
-			sorted_dv = _Dv[dv].sort()
-			texto = ('%s: ' % dv)
-			texto += ', '.join(str(vertice) for vertice in sorted_dv)
-			print(texto)		
+'''	
+g = GrafoND()
+g.inserir_vertice(0,0)
+g.inserir_vertice(1,1)
+g.inserir_vertice(2,2)
 
-
-
-
-
+g.inserir_aresta(0,1,1)
+g.inserir_aresta(0,2,1)
+g.inserir_aresta(1,2,1)
+g.inserir_aresta(2,2,1)
+print(g.pegar_arestas())
+'''
 
 
