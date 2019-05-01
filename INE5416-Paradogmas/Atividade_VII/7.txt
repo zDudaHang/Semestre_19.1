@@ -1,0 +1,34 @@
+Basicamente, O'Haskell contém os conceitos de Haskell com algumas abstrações novas:
+
+--> Subtyping (Polimorfismo Ad-hoc - Inclusão): Um subtipo é um dado que está relacionado a outro (supertipo), ou seja, uma herança. Essa abstração determina que todas as rotinas/funções contidas no elemento superior da hierarquia(supertipo) deverão operar no subtipo. Considere A um subtipo de Z, (A <: Z), logo um dado do tipo A poderá, seguramente, ser usado no contexto onde Z era esperado.
+
+--> Orientação a objetos: Um conjunto de classes, contendo atributos e métodos, que interagem entre si.
+
+--> Polimorfismo paramétrico e inferência automática de tipos, ex:
+-> Polimorfismo paramétric(C++):
+
+template <typename T>
+class ArrayQueue {
+ public:
+    ArrayQueue();
+
+    explicit ArrayQueue(std::size_t max);
+
+    ~ArrayQueue();
+
+    void enqueue(const T& data);
+
+    T dequeue();
+
+    T& back();
+
+ private:
+    T* contents;
+    std::size_t size_;
+
+-> Inferência automática de tipos(C++):
+auto ehVerdade = True; 
+(O Compilador perceberá que o melhor tipo para essa variável seria o Bool)
+
+--> Programação concorrente: Síncrona e Assíncrona.
+
