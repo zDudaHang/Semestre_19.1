@@ -1,0 +1,39 @@
+1B) Faça um breve resumo sobre as classes numéricas do Haskell. Como elas estão relacionadas entre si?
+Tente entender os métodos disponı́vel em cada classe.
+
+A relação entre as classes numéricas pode ser definida como uma herança, onde um tipo é uma instância de uma classe, herdando seus métodos. Como por exemplo o caso da classe Ord ser uma instância da Eq, ou seja, Ord herda os métodos (/=) e (==). Isso permite um tipo de reuso dos métodos que já foram definidos, logo, não é necessário rescrevê-los.
+
+Classe Num:
+(+), (-), (*) :: a -> a -> a : Soma, subtração e multiplicação (Retorna para o mesmo tipo)
+negate :: a -> a : Retorna o valor oposto do parâmetro (0 - x)
+abs, signum :: a -> a : Abs retorna o valor absoluto e Signum retorna -1 se for negativo, 0 se for zero e 1 se for positivo.
+fromInteger :: Integer -> a : Converte um Integer para Num.
+
+Classe Integral:
+quot, rem        :: a -> a -> a  : Retornam o quociente(divisão inteira) e o resto da divisão inteira respectivamente.
+div, mod         :: a -> a -> a : Efetua a divisão inteira e o mod.
+quotRem, divMod  :: a -> a -> (a,a) : Retorna uma tupla (quociente, resto) e (resultado da divisão inteira, resultado mod)
+toInteger        :: a -> Integer : Converte um Integral para o tipo inteiro.
+
+Classe Real:
+toRational :: a -> Rational : Converte um valor aproximado do número real para um tipo racional.
+
+Classe Fractional:
+(/)              :: a -> a -> a : Retorna um número fracionário de uma divisão.
+recip            :: a -> a : Retorna 1 / argumento.
+fromRational     :: Rational -> a : Recebe um tipo Rational e retorna um Fractional
+
+Classe Floating:
+pi                  :: a : Retorna o número pi.
+exp, log, sqrt      :: a -> a : Exponencial, Log natural e Raiz quadrada
+(**), logBase       :: a -> a -> a : Exponenciação, Logaritmo na base do argumento.
+sin, cos, tan       :: a -> a : Seno, Cosseno e Tangente
+asin, acos, atan    :: a -> a : Arcoseno, Arcosseno, Arcotangente
+sinh, cosh, tanh    :: a -> a : Seno, Cosseno e Tangente hiperbólicos.
+asinh, acosh, atanh :: a -> a : Inversas de seno, cosseno e tangente hiperbólicos.
+
+Classe RealFrac:
+properFraction   :: (Integral b) => a -> (b,a) : Retorna uma tupla da seguinte forma (parte inteira, parte fracionária). Ex properFraction 3.45 = (3, 0.45)
+truncate, round  :: (Integral b) => a -> b : Retorna o menor inteiro entre o argumento e 0 e arredonda.
+ceiling, floor   :: (Integral b) => a -> b : Retorna o menor inteiro, mas não é menor que o argumento, e retorna o maior inteiro que não é maior que o argumento.
+

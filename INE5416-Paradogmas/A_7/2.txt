@@ -1,0 +1,71 @@
+Polimorfismo Ad-hoc: 
+
+--> Sobrecarga: Execução do método conforme a lista de parâmetros(quantidade e tipos).
+
+Ex (Python):
+class Pessoa:
+	def dizer_informacoes(nome):
+		print("Meu nome é : %s" % nome)
+	def dizer_informacoes(nome,idade):
+		print("Meu nome é %s e tenho %d anos" % (nome, idade))
+
+--> Coersão: Conversão de tipos de dados diferentes, podendo ser de forma implícita(automaticamente) ou explícita.
+Ex (Haskell):
+let aString <- getLine
+let a = (read aString :: int)
+
+Polimorfismo Universal:
+
+--> Inclusão: As subclasses implementam um método da superclasse de forma diferente. Isso é garantido através da herança, uma vez que existe um "contrato" entre a superclasse e a subclasse nas implementações dos métodos.
+
+Ex (Haskell):
+
+type Raio = Float
+type Base = Float
+type Altura = Float
+
+data Forma = Circulo Raio | Retangulo Base Altura | Triangulo Base Altura
+
+area :: Forma -> Float
+area (Circulo r) = pi * r * r
+area (Retangulo b a) = b * a
+area (Triangulo b a) = (b*a)/2
+
+--> Paramétrico: Uma função ou um dado que pode ser escrito de forma genérica, podendo instanciar diferentes tipos de dados e trabalhar com eles da forma.
+
+Ex 1 (C++):
+Classe com generic:
+
+template <typename T>
+class ArrayQueue {
+ public:
+    ArrayQueue();
+
+    explicit ArrayQueue(std::size_t max);
+
+    ~ArrayQueue();
+
+    void enqueue(const T& data);
+
+    T dequeue();
+
+    T& back();
+
+ private:
+    T* contents;
+    std::size_t size_;
+
+Método com generic:
+
+template <typename T>
+structures::ArrayQueue<T>::ArrayQueue() {
+    this->ArrayQueue(DEFAULT_SIZE);
+}
+
+Ex 2 (Haskell):
+
+toRational :: a -> Rational
+
+
+
+
