@@ -26,25 +26,27 @@
 	)
 )
 
+(defun par (n)
+	(setq resto (mod n 2))
+	(= resto 0)
+)
+
 (defun goldbach(n num)
 	(cond
-		((= n 0) 0)
-		((= n 1) 0)
-		((= n 2) 0)
-		( (not (primo num)) goldbach n (+ num 1))
-		((/= (mod n 2) 0) 0)
+		((<= n 2) 0)
+		( (not (par n)) 0 )
+		( (not (primo num)) (goldbach n (+ num 1)) )
 		( (primo (- n num)) num)
-		(t goldbach n (+ num 1))
+		(t (goldbach n (+ num 1)))
 	)
 )
 
 
 (defun main()
-	(write-line "Primeiro valor:")
+	(write-line "Número:")
 	(setq a (read))
-	(setq resultado (primo a))
-	; (write-line (write-to-string(primoAux a 1 0)))
-	(write-line resultado)
+	(setq resultado (goldbach a 3))
+	(write-line (write-to-string resultado))
 )
 
 (main)
