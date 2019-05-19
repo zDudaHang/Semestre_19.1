@@ -95,27 +95,26 @@ class Algoritmo_Hierholzer:
 			ciclo_1[-1:-1] = ciclo_2[:-1]
 			return ciclo_1
 
-#=================================================	TESTE
-g = GrafoND()
-for i in range(0,9):
-	g.inserir_vertice(i,i)
+if __name__ == "__main__":
+	g = GrafoND()
+	for i in range(0,9):
+		g.inserir_vertice(i,i)
 
-g.inserir_aresta(0,1,1)
-g.inserir_aresta(0,2,1)
-g.inserir_aresta(1,2,1)
+	g.inserir_aresta(0,1,1)
+	g.inserir_aresta(0,2,1)
+	g.inserir_aresta(1,2,1)
 
-g.inserir_aresta(1,3,1)
-g.inserir_aresta(1,4,1)
-g.inserir_aresta(3,4,1)
+	g.inserir_aresta(1,3,1)
+	g.inserir_aresta(1,4,1)
+	g.inserir_aresta(3,4,1)
 
-g.inserir_aresta(4,5,1)
-g.inserir_aresta(4,6,1)
-g.inserir_aresta(6,5,1)
+	g.inserir_aresta(4,5,1)
+	g.inserir_aresta(4,6,1)
+	g.inserir_aresta(6,5,1)
 
-g.inserir_aresta(6,7,1)
-g.inserir_aresta(6,8,1)
-g.inserir_aresta(7,8,1)
+	g.inserir_aresta(6,7,1)
+	g.inserir_aresta(6,8,1)
+	g.inserir_aresta(7,8,1)
 
-h = Algoritmo_Hierholzer()
-h.encontrar_ciclo_euleriano(g)
-#=================================================	TESTE
+	h = Algoritmo_Hierholzer()
+	h.encontrar_ciclo_euleriano(g)

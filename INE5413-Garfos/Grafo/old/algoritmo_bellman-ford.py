@@ -50,17 +50,3 @@ class Algoritmo_BellmanFord:
 			print("%s: %s; d=%s"%(v, lista_antecessores, distancia[v]))
 
 
-g = GrafoND()
-
-for i in range(0,5):
-	g.inserir_vertice(i,i)
-
-g.inserir_aresta(0,1,1)
-g.inserir_aresta(0,2,1)
-g.inserir_aresta(1,2,1)
-g.inserir_aresta(2,3,1)	
-g.inserir_aresta(3,4,1)
-
-cm = Algoritmo_BellmanFord()
-cm.encontrar_caminho_minimo(g, 0)
-cm.encontrar_caminho_minimo(g, 1)

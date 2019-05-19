@@ -1,4 +1,4 @@
-from grafo import GrafoND
+from grafo import Grafo
 import os
 
 class Leitor:
@@ -21,7 +21,7 @@ class Leitor:
 		info_num_vertices = texto[0].split()
 		num_vertices = int(info_num_vertices[1])
 
-		grafo = GrafoND()
+		grafo = Grafo()
 
 		self.pegar_vertices(texto, num_vertices, grafo)
 		self.pegar_arestas(texto, num_vertices, grafo)

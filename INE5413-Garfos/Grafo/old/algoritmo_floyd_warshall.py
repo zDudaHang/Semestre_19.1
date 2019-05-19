@@ -46,20 +46,3 @@ class Algoritmo_Floyd_Warshall:
 			print(*distancia, sep = ", ")
 			i+=1
 
-
-g = GrafoND()
-
-for i in range(1,6):
-	g.inserir_vertice(i,i)
-
-
-g.inserir_aresta(1,2,8)
-g.inserir_aresta(1,3,2)
-g.inserir_aresta(2,4,7)
-g.inserir_aresta(3,5,5)
-g.inserir_aresta(4,5,2)
-
-#print(g.mostrar_grafo())
-
-fw = Algoritmo_Floyd_Warshall()
-fw.encontrar_caminhos_minimos(g)

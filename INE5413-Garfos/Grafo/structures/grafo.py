@@ -1,16 +1,17 @@
-from algoritmo_bfs import Algoritmo_bfs
-import random
-
-class GrafoND:
-	def __init__(self):
+class Grafo:
+	def __init__(self, dirigido):
 		self.vertices = {}
+		self.dirigido = dirigido
 
 	def inserir_vertice(self, id_vertice, rotulo_vertice):
 		self.vertices[id_vertice] = [rotulo_vertice]
 
 	def inserir_aresta(self, vertice_u, vertice_v, peso):
-		self.vertices[vertice_u].append( (vertice_v, peso) )
-		self.vertices[vertice_v].append( (vertice_u, peso) )
+		if (not self.dirigido):
+			self.vertices[vertice_u].append( (vertice_v, peso) )
+			self.vertices[vertice_v].append( (vertice_u, peso) )
+		else:
+			self.vertices[vertice_u].append( (vertice_v, peso) )
 
 	def qtdVertices(self):
 		return len(self.vertices)
@@ -19,7 +20,9 @@ class GrafoND:
 		sum = 0
 		for vertice in self.vertices:
 			sum += len(self.vertices[vertice][1::])
-		return int(sum/2)
+		if (not self.dirigido):
+			sum = int(sum/2)
+		return sum
 
 	def pegar_vertices(self):
 		return list(self.vertices.keys())
@@ -87,17 +90,16 @@ class GrafoND:
 				return False
 		return True
 
-'''	
-g = GrafoND()
-g.inserir_vertice(0,0)
-g.inserir_vertice(1,1)
-g.inserir_vertice(2,2)
+if __name__ == "__main__":
+	g = Grafo(False)
+	g.inserir_vertice(0,0)
+	g.inserir_vertice(1,1)
+	g.inserir_vertice(2,2)
 
-g.inserir_aresta(0,1,1)
-g.inserir_aresta(0,2,1)
-g.inserir_aresta(1,2,1)
-g.inserir_aresta(2,2,1)
-print(g.pegar_arestas())
-'''
+	g.inserir_aresta(0,1,1)
+	g.inserir_aresta(0,2,1)
+	g.inserir_aresta(1,2,1)
+	g.inserir_aresta(2,2,1)
+	print(g.pegar_arestas())
 
 

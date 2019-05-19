@@ -42,20 +42,3 @@ class Algoritmo_bfs:
 
 	def mostrar_distancia(self, _distancia):
 		print(*_distancia, sep = ", ")
-
-'''
-g = GrafoND()
-g.inserir_vertice(0,0)
-g.inserir_vertice(1,1)
-g.inserir_vertice(2,2)
-g.inserir_vertice(3,3)
-
-g.inserir_aresta(0,1,1)
-g.inserir_aresta(0,2,1)
-g.inserir_aresta(1,2,1)
-g.inserir_aresta(3,3,1)
-
-bfs = Algoritmo_bfs()
-Dv = bfs.buscar_em_largura(0, g)
-bfs.mostrar_Dv(bfs.filtrar_Dv(Dv))
-'''
