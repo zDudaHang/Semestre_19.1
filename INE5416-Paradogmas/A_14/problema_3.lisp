@@ -1,0 +1,26 @@
+(defun main()
+	(setq a (read))
+	(setq b (read))
+	(setq c (read))
+	(setq delta ( (lambda (x y z) 
+		(- 
+			(* y y) 
+			(* 4 x z)
+		)
+	) a b c))
+	(setq raiz_delta ( (lambda (x) (sqrt x) ) delta))
+	(setq raiz1 ( (lambda (x y z r)
+		(/
+			(+(- 0 y)r)
+		(* 2 x) )
+		) a b c raiz_delta) )
+	(setq raiz2 ( (lambda (x y z r)
+		(/
+			(-(- 0 y)r)
+		(* 2 x) )
+		) a b c raiz_delta) )
+	(write-line (write-to-string raiz1))
+	(write-line (write-to-string raiz2))
+)
+
+(main)
