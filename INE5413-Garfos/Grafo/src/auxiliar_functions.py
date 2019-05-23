@@ -1,4 +1,4 @@
-
+import random
 
 # ======================================================================= HIELHOZER
 
@@ -18,50 +18,50 @@ def unir_subciclos(ciclo_1, ciclo_2):
 	ocorrencias_1em2 = ciclo_2.count(primeiro_c1)
 
 	if (ocorrencias_1em2 == 1):
-	indice = ciclo_2.index(primeiro_c1)
-	ciclo_2[indice:indice+1] = ciclo_1
-	return ciclo_2
+		indice = ciclo_2.index(primeiro_c1)
+		ciclo_2[indice:indice+1] = ciclo_1
+		return ciclo_2
 	
 	elif (ocorrencias_1em2 > 1):
-	ciclo_2[-1:-1] = ciclo_1[:-1]
-	return ciclo_2
+		ciclo_2[-1:-1] = ciclo_1[:-1]
+		return ciclo_2
 
 	if (ocorrencias_2em1 == 1):
-	indice = ciclo_1.index(primeiro_c2)
-	ciclo_1[indice:indice+1] = ciclo_2
-	return ciclo_1
+		indice = ciclo_1.index(primeiro_c2)
+		ciclo_1[indice:indice+1] = ciclo_2
+		return ciclo_1
 	
 	elif (ocorrencias_2em1 > 1):
-	ciclo_1[-1:-1] = ciclo_2[:-1]
-	return ciclo_1
+		ciclo_1[-1:-1] = ciclo_2[:-1]
+		return ciclo_1
 
 def encontrar_subciclo_euleriano(grafo, visitados, v, ciclo):
 	referencia = v
 	
 	while True:
-	ciclo.append(v)
+		ciclo.append(v)
 	if (len(filtrar_nao_visitadas_vertice(visitados, v)) == 0):
-	return (False,None)
+		return (False,None)
 	else:
-	par = random.choice(filtrar_nao_visitadas_vertice(visitados,v))
-	u = par[1]
-	visitados[(v,u)] = True
-	visitados[(u,v)] = True
-	v = u
+		par = random.choice(filtrar_nao_visitadas_vertice(visitados,v))
+		u = par[1]
+		visitados[(v,u)] = True
+		visitados[(u,v)] = True
+		v = u
 
 	if (referencia == v):
-	ciclo.append(v)
-	break
+		ciclo.append(v)
+		break
 
 	for v in ciclo:
-	if(len(filtrar_nao_visitadas_vertice(visitados, v)) != 0):
-	ciclo_2 = []
-	retorno = encontrar_subciclo_euleriano(grafo, visitados, v, ciclo_2)
+		if(len(filtrar_nao_visitadas_vertice(visitados, v)) != 0):
+		ciclo_2 = []
+		retorno = encontrar_subciclo_euleriano(grafo, visitados, v, ciclo_2)
 
 	if (retorno[0] == False):
-	return(False, None)
+		return(False, None)
 	else:
-	ciclo = unir_subciclos(ciclo, ciclo_2)
+		ciclo = unir_subciclos(ciclo, ciclo_2)
 
 	return (True, ciclo)
 
