@@ -10,8 +10,6 @@ def cfc(grafo):
 
 	(visitados, tempos_finais, antecessores, tempos_finais) = dfs_cormen(grafo)
 
-
-
 	antecessores_transposto = {}
 
 	grafo_tranposto = Grafo(True)
@@ -24,13 +22,38 @@ def cfc(grafo):
 		v = aresta[1]
 		grafo_tranposto.inserir_aresta(v, u, 1.0)
 
-	visitados_tranposto = {}
-	tempos_inicias_transposto = {}
-	tempos_finais_transposto = {}
-	antecessores_transposto = {}
-	resultado = dfs_cormen(grafo_tranposto)
-	print(*resultado, sep = "\n")
-	return resultado[2]
+	resultado = dfs_adaptado(grafo_tranposto, tempos_finais)
+
+	At = resultado[2]
+
+	Arv = mostrar_subArvores(At, grafo)
+
+	print("Conjuntos obtidos:")
+	for raiz in list(Arv.keys()):
+		print("%d: " % raiz, end = '')
+		print(*Arv[raiz], sep = " , ")
+
+	return At
+
+def mostrar_subArvores(antecessores, grafo):
+	Arv = {}
+
+	for v in grafo.pegar_vertices():
+		if(antecessores[v] == None):
+				Arv[v] = []
+
+	for v in grafo.pegar_vertices():
+		u = v
+
+		if (antecessores[v] == None):
+			continue
+
+		while(antecessores[v] != None):
+			antecessor = antecessores[v]
+			v = antecessor
+		Arv[v].append(u)
+
+	return Arv
 		
 
 def dfs_cormen(grafo):
@@ -51,10 +74,36 @@ def dfs_cormen(grafo):
 
 	for v in vertices:
 		if (visitados[v] == False):
-			visitados[v] = True
 			dfs_visit(grafo, v, visitados, tempos_inicias, antecessores, tempos_finais, tempo)
 
 	return (visitados, tempos_inicias, antecessores, tempos_finais)
+
+def dfs_adaptado(grafo, F):
+	visitados = {}
+	tempos_inicias = {}
+	tempos_finais = {}
+	antecessores = {}
+
+	tempos = list(grafo.vertices)
+
+	vertices = grafo.pegar_vertices()
+
+	for v in vertices:
+		visitados[v] = False
+		tempos_inicias[v] = float('inf')
+		tempos_finais[v] = float('inf')
+		antecessores[v] = None
+
+	tempo = 0
+
+	tempos.sort(key=lambda v: F[v], reverse = True)
+
+	for v in tempos:
+		if (visitados[v] == False):
+			dfs_visit(grafo, v, visitados, tempos_inicias, antecessores, tempos_finais, tempo)
+
+	return (visitados, tempos_inicias, antecessores, tempos_finais)
+
 
 def dfs_visit(grafo, vertice_v, visitados, tempos_inicias, antecessores, tempos_finais, tempo):
 	visitados[vertice_v] = True
@@ -208,20 +257,26 @@ if __name__ == "__main__":
 
 	g2 = Grafo(True)
 
-	g2.inserir_vertice(0,0)
-	g2.inserir_vertice(1,1)
-	g2.inserir_vertice(2,2)
-	g2.inserir_vertice(3,3)
-	g2.inserir_vertice(4,4)
-	g2.inserir_vertice(5,5)
-	g2.inserir_vertice(6,6)
-	g2.inserir_vertice(7,7)
+	g2.inserir_vertice(0,"a")
+	g2.inserir_vertice(1,"b")
+	g2.inserir_vertice(2,"c")
+	g2.inserir_vertice(3,"d")
+	g2.inserir_vertice(4,"e")
+	g2.inserir_vertice(5,"f")
+	g2.inserir_vertice(6,"g")
+	g2.inserir_vertice(7,"h")
 
 	g2.inserir_aresta(0,1,1)
-	g2.inserir_aresta(0,2,1)
+	g2.inserir_aresta(0,3,1)
 	g2.inserir_aresta(1,3,1)
-	g2.inserir_aresta(3,4,1)
+	g2.inserir_aresta(1,4,1)
+	g2.inserir_aresta(2,1,1)
+	g2.inserir_aresta(2,4,1)
 	g2.inserir_aresta(5,6,1)
+	g2.inserir_aresta(5,3,1)
+	g2.inserir_aresta(7,6,1)
+	g2.inserir_aresta(4,7,1)
+	g2.inserir_aresta(6,1,1)
 	
 	cfc(g2)
 

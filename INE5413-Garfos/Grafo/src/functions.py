@@ -1,5 +1,7 @@
 import random
 import auxiliar_functions
+from grafo import Grafo
+import heapq
 from queue import Queue
 
 def encontrar_ciclo_euleriano(grafo):
@@ -125,4 +127,113 @@ def encontrar_caminho_minimo(grafo, vertice):
 	mostrar_caminho_minimo(distancia, antecessores, vertice)
 
 	return (True, distancia, antecessor)
+
+def cfc(grafo):
+	visitados = {}
+	tempos_inicias = {}
+	tempos_finais = {}
+	antecessores = {}
+
+	(visitados, tempos_finais, antecessores, tempos_finais) = dfs_cormen(grafo)
+
+	antecessores_transposto = {}
+
+	grafo_tranposto = Grafo(True)
+
+	for v in grafo.pegar_vertices():
+		grafo_tranposto.inserir_vertice(v, grafo.rotulo(v))
+
+	for aresta in grafo.pegar_arestas():
+		u = aresta[0]
+		v = aresta[1]
+		grafo_tranposto.inserir_aresta(v, u, 1.0)
+
+	resultado = dfs_adaptado(grafo_tranposto, tempos_finais)
+
+	At = resultado[2]
+
+	Arv = mostrar_subArvores(At, grafo)
+
+	print("Conjuntos obtidos:")
+	for raiz in list(Arv.keys()):
+		print("%d: " % raiz, end = '')
+		print(*Arv[raiz], sep = " , ")
+
+	return At
+
+def ordenacao_topologica(grafo):
+	visitados = {}
+	tempos_inicias = {}
+	tempos_finais = {}
+	antecessores = {}
+
+	vertices = grafo.pegar_vertices()
+
+	for v in vertices:
+		visitados[v] = False
+		tempos_inicias[v] = float('inf')
+		tempos_finais[v] = float('inf')
+		antecessores[v] = None
+
+	tempo = 0
+
+	ordem_topologica = []
+
+	for v in vertices:
+		if (visitados[v] == False):
+			dfs_visit_ot(grafo, v, visitados, tempos_inicias, antecessores, tempos_finais, tempo, ordem_topologica)
+
+	ordem_topologica_rotulos = []
+
+	for v in ordem_topologica:
+		rotulo = grafo.rotulo(v)
+		index = ordem_topologica.index(v)
+		ordem_topologica_rotulos.append(rotulo)
+
+	print(*ordem_topologica_rotulos, sep = " --> ")
+
+	return ordem_topologica
+
+def prim(grafo):
+	vertices = grafo.pegar_vertices()
+
+	r = random.choice(vertices)
+
+	print("Vértice escolhido: %d" % r)
+
+	A = {}
+
+	K = {}
+
+	priorityQueue = []
+
+	for v in vertices:
+		A[v] = None
+		K[v] = float('inf')
+
+	K[r] = 0
+
+	for v in vertices:
+		par = (K[v],v)
+		heapq.heappush(priorityQueue, par)
+
+	heapq.heapify(priorityQueue)
+
+	while (len(priorityQueue) != 0):
+		menor = heapq.heappop(priorityQueue)
+		for par in grafo.vizinhos(menor[1]):
+			u = par[0]
+			if (estaNaListaDaHeap(u, K[u],priorityQueue) and grafo.peso(menor[1],u) < K[u]):
+				peso = grafo.peso(menor[1], u)
+				A[u] = menor[1]
+				index = priorityQueue.index( (K[u], u) )
+				priorityQueue.pop(index)
+				K[u] = peso
+				priorityQueue.insert(index, (peso, u) )
+				heapq.heapify(priorityQueue)
+
+	print(mostrarSoma(K))
+	print(mostrarArvore(A))
+
+	return (A,K)
 

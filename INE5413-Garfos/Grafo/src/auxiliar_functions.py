@@ -118,3 +118,132 @@ def mostrar_caminho_minimo(distancia, antecessores, vertice):
 		print("%s: %s; d=%s"%(v, lista_antecessores, distancia[v]))
 
 # ======================================================================= BELLMAN FORD
+
+# ======================================================================= CFC
+
+def mostrar_subArvores(antecessores, grafo):
+	Arv = {}
+
+	for v in grafo.pegar_vertices():
+		if(antecessores[v] == None):
+				Arv[v] = []
+
+	for v in grafo.pegar_vertices():
+		u = v
+
+		if (antecessores[v] == None):
+			continue
+
+		while(antecessores[v] != None):
+			antecessor = antecessores[v]
+			v = antecessor
+		Arv[v].append(u)
+
+	return Arv
+		
+
+def dfs_cormen(grafo):
+	visitados = {}
+	tempos_inicias = {}
+	tempos_finais = {}
+	antecessores = {}
+
+	vertices = grafo.pegar_vertices()
+
+	for v in vertices:
+		visitados[v] = False
+		tempos_inicias[v] = float('inf')
+		tempos_finais[v] = float('inf')
+		antecessores[v] = None
+
+	tempo = 0
+
+	for v in vertices:
+		if (visitados[v] == False):
+			dfs_visit(grafo, v, visitados, tempos_inicias, antecessores, tempos_finais, tempo)
+
+	return (visitados, tempos_inicias, antecessores, tempos_finais)
+
+def dfs_adaptado(grafo, F):
+	visitados = {}
+	tempos_inicias = {}
+	tempos_finais = {}
+	antecessores = {}
+
+	tempos = list(grafo.vertices)
+
+	vertices = grafo.pegar_vertices()
+
+	for v in vertices:
+		visitados[v] = False
+		tempos_inicias[v] = float('inf')
+		tempos_finais[v] = float('inf')
+		antecessores[v] = None
+
+	tempo = 0
+
+	tempos.sort(key=lambda v: F[v], reverse = True)
+
+	for v in tempos:
+		if (visitados[v] == False):
+			dfs_visit(grafo, v, visitados, tempos_inicias, antecessores, tempos_finais, tempo)
+
+	return (visitados, tempos_inicias, antecessores, tempos_finais)
+
+
+def dfs_visit(grafo, vertice_v, visitados, tempos_inicias, antecessores, tempos_finais, tempo):
+	visitados[vertice_v] = True
+	tempo += 1
+	tempos_inicias[vertice_v] = tempo
+	for par in grafo.vizinhos(vertice_v):
+		u = par[0]
+		if (visitados[u] == False):
+			antecessores[u] = vertice_v
+			dfs_visit(grafo, u, visitados, tempos_inicias, antecessores, tempos_finais, tempo)
+	tempo += 1
+	tempos_finais[vertice_v] = tempo
+
+# ======================================================================= CFC
+
+# ======================================================================= ORDENACAO TOPOLOGICA
+
+def dfs_visit_ot(grafo, vertice_v, visitados, tempos_inicias, antecessores, tempos_finais, tempo, ordem_topologica):
+	visitados[vertice_v] = True
+	tempo += 1
+	tempos_inicias[vertice_v] = tempo
+
+	for par in grafo.vizinhos(vertice_v):
+		u = par[0]
+		if (visitados[u] == False):
+			antecessores[u] =  vertice_v
+			dfs_visit_ot(grafo, u, visitados, tempos_inicias, antecessores, tempos_finais, tempo, ordem_topologica)
+
+	tempo += 1
+	tempos_finais[vertice_v] = tempo
+	ordem_topologica.insert(0, vertice_v)
+
+# ======================================================================= ORDENACAO TOPOLOGICA
+
+# ======================================================================= PRIM
+
+def mostrarSoma(lista_chaves):
+	soma = 0
+	for chave in lista_chaves:
+		if chave != float('inf'):
+			soma += chave
+	return soma
+
+def mostrarArvore(A):
+	caminho = []
+	for v in list(A.keys()):
+		if(A[v] != None):
+			caminho.append((A[v],v))
+	return caminho
+
+def estaNaListaDaHeap(vertice_u, chave_k, lista_heap):
+	return (chave_k, vertice_u) in lista_heap
+
+def mostrarOrdemTopologica(ordem_topologica, grafo):
+	print(*ordem_topologica, sep = " --> ")
+
+# ======================================================================= PRIM
