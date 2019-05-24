@@ -21,7 +21,11 @@ class Leitor:
 		info_num_vertices = texto[0].split()
 		num_vertices = int(info_num_vertices[1])
 
-		grafo = Grafo()
+		dirigido = False
+		if '*arcs' in open(self.arquivo).read():
+			dirigido = True
+
+		grafo = Grafo(dirigido)
 
 		self.pegar_vertices(texto, num_vertices, grafo)
 		self.pegar_arestas(texto, num_vertices, grafo)
