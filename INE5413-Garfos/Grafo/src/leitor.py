@@ -1,4 +1,4 @@
-from grafo import Grafo
+from structures.grafo import Grafo
 import os
 
 class Leitor:
@@ -22,7 +22,7 @@ class Leitor:
 		num_vertices = int(info_num_vertices[1])
 
 		dirigido = False
-		if '*arcs' in open(self.arquivo).read():
+		if (texto[num_vertices+1] == '*arcs'):
 			dirigido = True
 
 		grafo = Grafo(dirigido)
