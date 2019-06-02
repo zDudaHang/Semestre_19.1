@@ -8,7 +8,7 @@ typedef struct {
 
 int main(int argc, char **argv) {
 	FILE *f;
-	if ( (f = fopen("inteiros.bin", "r")) == NULL ) {
+	if ( (f = fopen("inteiros.bin", "rb")) == NULL ) {
 		printf("Erro ao abrir arquivo \n");
 		return 1;
 	}

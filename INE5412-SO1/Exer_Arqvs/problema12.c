@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 		printf("Erro ao abrir arquivo \n");
 		return 1;
 	}
-	if ( (new = fopen("inteiros-texto.txt", "wb")) == NULL ) {
+	if ( (new = fopen("inteiros-texto.txt", "w")) == NULL ) {
 		printf("Erro ao abrir arquivo \n");
 		return 1;
 	}

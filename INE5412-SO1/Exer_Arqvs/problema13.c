@@ -55,5 +55,6 @@ int main(int argc, char **argv) {
 	fclose(old);
 	fclose(new);
 	remove(oldName);
+	rename(newName,oldName);
 	return 0;
 }
