@@ -5,11 +5,13 @@ from sys import argv
 from os import path
 
 if __name__ == '__main__':
+
 	if len(argv) < 2:
 		print('Utilização correta: python questao1_A2.py <arquivo_descrevendo_grafo>')
 		exit()
 
 	arquivo = argv[1]
+	
 	if not path.isfile(arquivo):
 		print('Arquivo não encontrado :/')
 		exit()
@@ -18,6 +20,4 @@ if __name__ == '__main__':
 
 	grafo = leitor.ler()
 
-	print("Resultado do Algoritmo de Componentes Fortemente Conexas:\n")
-
-	buscar_em_largura(grafo)
+	kruskal(grafo)

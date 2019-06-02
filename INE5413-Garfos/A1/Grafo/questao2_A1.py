@@ -18,6 +18,4 @@ if __name__ == '__main__':
 
 	grafo = leitor.ler()
 
-	print("Resultado do Algoritmo de Componentes Fortemente Conexas:\n")
-
-	encontrar_ciclo_euleriano(grafo)
+	buscar_em_largura(grafo)

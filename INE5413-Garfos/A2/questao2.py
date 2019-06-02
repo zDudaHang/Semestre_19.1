@@ -18,6 +18,4 @@ if __name__ == '__main__':
 
 	grafo = leitor.ler()
 
-	print("Resultado do Algoritmo de Ordenação Topológica:\n")
-
-	ordenacao_topologica(grafo)
+	ordenacaoTopologica(grafo)
